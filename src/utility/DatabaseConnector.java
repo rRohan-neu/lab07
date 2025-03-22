@@ -65,7 +65,7 @@ public class DatabaseConnector {
                 User u1 = new User();
                 u1.setUserId(rs.getInt("student_id"));
                 u1.setname(rs.getString("first_name"));
-              u1.setlastName(rs.getString("last_name"));
+                u1.setLastName(rs.getString("last_name"));
                 u1.setCollege(rs.getString("college"));
                 u1.setAge(rs.getInt("age"));
                 users.add(u1);

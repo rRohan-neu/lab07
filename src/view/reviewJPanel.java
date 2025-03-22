@@ -61,7 +61,7 @@ public class reviewJPanel extends javax.swing.JPanel {
     private void setAllFields(){
             
             this.firstNameTextField.setText(userObject.getname());
-            this.lastNameTextField.setText(userObject.getlastName());
+            this.lastNameTextField.setText(userObject.getLastName());
             this.genderComboBox.setSelectedItem(userObject.getGender());
 //            this.ageTextField.setText(String.valueOf(userObject.getAge()));
             this.emailTextField.setText(userObject.getEmail());
@@ -90,15 +90,29 @@ public class reviewJPanel extends javax.swing.JPanel {
           //this.dobTextField.setBackground(lightGray);
     }
  public void populateTable(){
-     this.users = DatabaseConnector.getUsers();
-     DefaultTableModel model = (DefaultTableModel) this.jTable2.getModel();
-     model.setRowCount(0);
-     for (User u1 : users){
-         Object [] row = new Object [4];
-         row[0] = u1.getname();
-         row[1] = u1.getlastName();
-         row[2] = u1.getAge();
-     model.addRow(row);
+//     this.users = DatabaseConnector.getUsers();
+//     DefaultTableModel model = (DefaultTableModel) this.jTable2.getModel();
+//     model.setRowCount(0);
+//     for (User u1 : users){
+//         Object [] row = new Object [3];
+//         row[0] = u1.getname();
+//         row[1] = u1.getlastName();
+//         row[2] = u1.getAge();
+//     model.addRow(row);
+
+this.users = DatabaseConnector.getUsers();
+    DefaultTableModel model = (DefaultTableModel) this.jTable2.getModel();
+    model.setRowCount(0); // Clear the table before adding new rows
+    
+     for (User u1 : users) {
+        Object[] row = new Object[4]; // Adjust array size based on the number of columns
+        
+        row[0] = u1.getUserId(); 
+        row[1] = u1.getname(); // "First Name"
+         row[2] = (u1.getLastName() != null) ? u1.getLastName() : "Unknown";// "Last Name"
+        row[3] = u1.getAge(); // "Age"
+        
+        model.addRow(row); // Add row to table
           
      }
      
@@ -122,14 +136,14 @@ public class reviewJPanel extends javax.swing.JPanel {
         lastNameTextField = new javax.swing.JTextField();
         genderComboBox = new javax.swing.JComboBox<>();
         GenderLabel = new javax.swing.JLabel();
-        ageLabel = new javax.swing.JLabel();
-        ageTextField = new javax.swing.JTextField();
         emailLabel = new javax.swing.JLabel();
         emailTextField = new javax.swing.JTextField();
         hobbiesTextField = new javax.swing.JTextField();
         hobbiesLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        editButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,8 +172,6 @@ public class reviewJPanel extends javax.swing.JPanel {
         genderComboBox.setSelectedIndex(-1);
 
         GenderLabel.setText("Gender:");
-
-        ageLabel.setText("Age:");
 
         emailLabel.setText("Email:");
 
@@ -194,6 +206,20 @@ public class reviewJPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -203,34 +229,32 @@ public class reviewJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(headinglabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(headinglabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(GenderLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(firstNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lastNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(genderComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lastNameTextField)
+                            .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(emailLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hobbiesLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editButton, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(GenderLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(firstNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lastNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(25, 25, 25)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(genderComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lastNameTextField)
-                                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(emailTextField)
+                                    .addComponent(hobbiesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(emailLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(hobbiesLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(25, 25, 25)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(emailTextField)
-                                        .addComponent(hobbiesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap())
+                                .addGap(35, 35, 35)
+                                .addComponent(deleteButton)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,11 +273,7 @@ public class reviewJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(GenderLabel)
                     .addComponent(genderComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ageLabel)
-                    .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(emailLabel)
@@ -263,9 +283,13 @@ public class reviewJPanel extends javax.swing.JPanel {
                         .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(hobbiesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editButton)
+                    .addComponent(deleteButton))
+                .addGap(25, 25, 25))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -290,13 +314,43 @@ public class reviewJPanel extends javax.swing.JPanel {
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldActionPerformed
-    
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+       // TODO add your handling code here:
+       
+       int selectedRowIndex = this.jTable2.getSelectedRow();
+       try{
+            this.userObject = this.users.get(selectedRowIndex);
+       DatabaseConnector.deleteUser(userObject);
+       System.out.println("user deleted successfully");
+       }catch(Exception e){
+           System.out.println("unable to delete");
+           System.out.println(e);
+       }
+      
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+            // TODO add your handling code here:
+            User updatedUser = new User();
+            updatedUser.setname(this.firstNameTextField.getText());
+            updatedUser.setLastName(this.lastNameTextField.getText());
+            updatedUser.setEmail(this.emailTextField.getText());
+            
+            try{
+                DatabaseConnector.updateUser(userObject, updatedUser);
+                System.out.println("Record has been edited");
+                populateTable();
+                
+            } catch (Exception e){
+    }//GEN-LAST:event_editButtonActionPerformed
+    }
    
     private javax.swing.JTextField dobTextField;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel GenderLabel;
-    private javax.swing.JLabel ageLabel;
-    private javax.swing.JTextField ageTextField;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton editButton;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel firstNameLabel;

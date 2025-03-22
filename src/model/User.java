@@ -34,14 +34,13 @@ public class User {
         this.hobbies = hobbies;
     }
 
-    public String getlastName() {
-        return lastName;
-    }
+   public String getLastName() { 
+    return lastName;
+}
 
-    // Getters and Setters
-    public void setlastName(String lastName) {
-        this.lastName = lastName;
-    }
+public void setLastName(String lastName) { 
+    this.lastName = lastName;
+}
 
     public String getEmail() {
         return email;
